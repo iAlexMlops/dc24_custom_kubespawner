@@ -51,8 +51,8 @@ jupyterhub:
       enabled: false
 
     image:
-      name: alex-spawner # Change me!
-      tag: "v1.0.2" # Change me!
+      name: alex-spawner
+      tag: "v1.0.0"
       pullPolicy: Never
 
     extraConfig:

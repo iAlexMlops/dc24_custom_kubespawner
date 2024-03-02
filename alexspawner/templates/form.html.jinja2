@@ -1,0 +1,46 @@
+<div>
+    <h3>Ваша группа: </h3> <label>{{ someGroup }}</label>
+<div>
+
+<div>
+    <h3>Параметры формы:</h3>
+<div>
+
+<div class='form-group'>
+    <label for='jupyter_image'>Jupyter Image</label>
+    <select name='jupyter_image' class='form-control'>
+        <option value='base-notebook'>base-notebook</option>
+    </select>
+</div>
+
+<div class='form-group'>
+    <label for='cpu'>CPU</label>
+    <input type='range' name='cpu' class='form-control' min='{{ config[someGroup].cpu.min }}' max='{{ config[someGroup].cpu.max }}' step='{{ config[someGroup].cpu.step }}' value='{{ config[someGroup].cpu.default }}'
+        oninput='updateValue(this, "cpu")'>
+    <output name='cpu_output'>{{ config[someGroup].cpu.default }}</output>
+</div>
+
+<div class='form-group'>
+    <label for='mem'>Memory (GB)</label>
+    <input type='range' name='mem' class='form-control' min='{{ config[someGroup].mem.min }}' max='{{ config[someGroup].mem.max }}' step='{{ config[someGroup].mem.step }}' value='{{ config[someGroup].mem.default }}'
+        oninput='updateValue(this, "mem")'>
+    <output name='mem_output'>{{ config[someGroup].mem.default }}</output>
+</div>
+
+
+<script>
+    function updateValue(element, key) {
+        const outputName = `${key}_output`;
+        const outputElement = document.querySelector(`output[name='${outputName}']`);
+        outputElement.textContent = element.value;
+
+        const cpuValue = parseInt(document.querySelector('input[name=cpu]').value);
+        const memValue = parseInt(document.querySelector('input[name=mem]').value);
+    }
+</script>
+
+
+
+
+
+

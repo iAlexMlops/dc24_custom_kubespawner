@@ -1,0 +1,4 @@
+setuptools~=68.2.2
+pyyaml~=6.0.1
+ldap3~=2.9.1
+jinja2~=3.1.2

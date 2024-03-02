@@ -1,0 +1,62 @@
+jupyterhub:
+
+  proxy:
+    service:
+      type: ClusterIP
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts: [ jupyterhub.alex.localhost ]
+    pathType: Prefix
+
+  debug:
+    enabled: true
+
+  hub:
+    extraEnv:
+      - name: ALEX_SPAWNER_LDAP_SERVER
+        value: "ldap://host.docker.internal:1389"
+      - name: ALEX_SPAWNER_LDAP_USER
+        value: "cn=admin,dc=example,dc=org"
+      - name: ALEX_SPAWNER_LDAP_PASSWORD
+        value: "adminpassword"
+      - name: ALEX_SPAWNER_LDAP_BASE_DN
+        value: "dc=example,dc=org"
+      - name: DOCKER_REGISTRY # Образ, на котором идет старт ноутбука
+        value: "docker.io"
+      - name: DOCKER_TAG # Тег образа, на котором идет старт ноутбука
+        value: "test"
+    service:
+      type: ClusterIP
+      extraPorts:
+        - name: debug
+          port: 5678
+
+    extraVolumeMounts:
+      - name: form-conf
+        mountPath: /tmp/
+    extraVolumes:
+      - name: form-conf
+        configMap:
+          name: alexspawner-form-conf
+          items:
+            - key: formConf.yaml
+              path: formConf.yaml
+
+
+    readinessProbe:
+      enabled: false
+    livenessProbe:
+      enabled: false
+
+    image:
+      name: alex-spawner # Change me!
+      tag: "v1.0.2" # Change me!
+      pullPolicy: Never
+
+    extraConfig:
+      spawner_define: |    
+        from alexspawner.spawner.spawner import AlexSpawner
+        
+        c.JupyterHub.spawner_class = AlexSpawner

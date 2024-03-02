@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alexspawner-form-conf
+data:
+  formConf.yaml: |
+    groups:
+      default:
+        cpu:
+          min: 1
+          max: 2
+          default: 1
+          step: 1
+        mem:
+          min: 1
+          max: 2
+          default: 1
+          step: 1
+        
+      jupyterhub_other_users:
+        cpu:
+          min: 1
+          max: 6
+          default: 3
+          step: 1
+        mem:
+          min: 1
+          max: 8
+          default: 2
+          step: 1
+    
+      jupyterhub_admins:
+        cpu:
+          min: 1
+          max: 12
+          default: 6
+          step: 1
+        mem:
+          min: 4
+          max: 124
+          default: 32
+          step: 2
